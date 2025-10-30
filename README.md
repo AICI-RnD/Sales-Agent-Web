@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# Dự án Interface Agents (Giao diện Tương tác Agents)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Đây là dự án Frontend được xây dựng bằng React, đóng vai trò là giao diện người dùng cho một hệ thống chatbot đa agent. Giao diện cho phép người dùng tương tác với nhiều "agents" chuyên biệt (như E-commerce, Spa, Education) trong một ứng dụng duy nhất, với một cửa sổ chat theo ngữ cảnh.
 
-## Available Scripts
+## Tính năng chính
 
-In the project directory, you can run:
+* **Giao diện Đa Agent:** Người dùng có thể chuyển đổi giữa các agent khác nhau thông qua thanh điều hướng (Sidebar).
+* **Nội dung Động:** Khu vực nội dung chính (`MainContent`) tự động cập nhật để hiển thị các thành phần (components) dành riêng cho agent đang được chọn.
+* **Chatbot theo Ngữ cảnh:** Một cửa sổ chatbot duy nhất (`ChatWindow`) duy trì trạng thái hội thoại riêng biệt cho từng agent. Khi bạn chuyển agent, cửa sổ chat sẽ tự động tải lịch sử trò chuyện của agent đó.
+* **Quản lý Trạng thái Tập trung:** Sử dụng React Context API (`ActiveAgentContext`, `ChatContext`) để quản lý trạng thái global.
+* **Tích hợp Backend:** Giao tiếp với API backend (qua `apiService.js`) để gửi tin nhắn của người dùng, nhận phản hồi từ AI và quản lý các phiên (session) chat.
 
-### `npm start`
+## Kiến trúc & Luồng dữ liệu (State Flow)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Dự án sử dụng hai Context chính để quản lý trạng thái:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1.  **`ViewProvider` (`ActiveAgentContext.js`)**:
+    * Quản lý một state duy nhất: `activeView` (ví dụ: `home`, `ecommerce-bot`, `spa-bot-products`).
+    * `Sidebar.js` chịu trách nhiệm gọi hàm `setActiveView` để thay đổi trạng thái này khi người dùng điều hướng.
 
-### `npm test`
+2.  **`ChatProvider` (`ChatContext.js`)**:
+    * Quản lý một state phức tạp: `conversations`. Đây là một object lưu trữ lịch sử tin nhắn, `chat_id`, và trạng thái `isTyping` cho *từng* agent.
+    * Cung cấp các hàm: `sendMessage` (gửi tin nhắn đến backend và cập nhật state) và `resetSession` (xóa lịch sử chat cho một agent).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Luồng hoạt động khi người dùng tương tác:**
 
-### `npm run build`
+1.  Người dùng click vào một mục trên **`Sidebar`** (ví dụ: "E-commerce").
+2.  `Sidebar` gọi `setActiveView('ecommerce-bot')` từ `ViewProvider`.
+3.  **`MainContent`**:
+    * Lắng nghe thay đổi của `activeView`.
+    * Render component tương ứng (ví dụ: `<EcommerceBotSection />`) dựa trên `activeView`.
+4.  **`ChatWindow`**:
+    * Cũng lắng nghe thay đổi của `activeView` để xác định `agentId` (ví dụ: `ecommerce-bot`).
+    * Sử dụng `agentId` này để lấy đúng cuộc hội thoại từ `ChatContext` (ví dụ: `conversations['ecommerce-bot']`).
+    * Hiển thị lịch sử tin nhắn của agent đó.
+5.  Khi người dùng gửi tin nhắn:
+    * `ChatWindow` gọi `sendMessage(agentId, chat_id, userMessage)` từ `ChatContext`.
+    * `ChatContext` cập nhật state (thêm tin nhắn người dùng), gọi `apiService` để gửi tin nhắn đến backend, nhận phản hồi của bot, và cập nhật state một lần nữa với tin nhắn của bot.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Cài đặt và Chạy dự án
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1.  **Clone repository:**
+    ```bash
+    git clone [URL_CUA_BAN]
+    cd [TEN_THU_MUC_DU_AN]
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2.  **Cài đặt dependencies:**
+    ```bash
+    npm install
+    ```
 
-### `npm run eject`
+3.  **Chạy dự án (Development):**
+    ```bash
+    npm start
+    ```
+    Mở [http://localhost:3000](http://localhost:3000) để xem trong trình duyệt.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4.  **Lưu ý:** Dự án này yêu cầu một máy chủ backend đang chạy để API (trong `apiService.js`) có thể hoạt động. Hãy đảm bảo bạn đã cấu hình đúng URL của API và backend đang hoạt động.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Các scripts có sẵn
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+* `npm start`: Chạy ứng dụng ở chế độ development.
+* `npm test`: Chạy trình test.
+* `npm run build`: Build ứng dụng cho production ra thư mục `build/`.
+* `npm run eject`: Eject khỏi Create React App (chỉ thực hiện khi bạn biết rõ mình đang làm gì).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Các thư viện chính
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* `react`
+* `react-router-dom`
+* `react-icons`
+* `uuid`

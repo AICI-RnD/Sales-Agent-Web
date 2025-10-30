@@ -1,0 +1,243 @@
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  /* NEW "TECH" BACKGROUND */
+  background-color: #0f0c29;
+  /* background: linear-gradient(135deg, #3c377f, #8b5aa8, #b784c2); */
+  background: linear-gradient(135deg, #ebe8f2, #e3d9ed, #decfe6, #e6c9e3);
+  background-size: 500% 500%;
+  animation: gradientBG 16s ease infinite;
+  position: relative;
+  padding-bottom: 1px; /* Add space for the last scroll icon */
+}
+
+/* ✨ Màu chữ chung cho toàn bộ */
+:root {
+  --text-primary: #5a4b78;
+  --text-secondary: #5a4b78;
+  --text-accent: #ffb3f0;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ---- Hero Section ---- */
+.heroSection {
+  padding: 40px;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  min-height: 90vh;
+}
+
+/* --- UPDATED TEXT and VISUAL STYLES --- */
+.heroText {
+  flex: 1;
+  text-align: left;
+  color: var(--text-primary);
+  padding-right: 2rem;
+}
+
+/* đoạn mô tả mềm hơn, dễ đọc hơn */
+.heroText .paragraph {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  max-width: 600px;
+  line-height: 1.7;
+}
+
+/* --- Tiêu đề chính gradient sáng hơn --- */
+.mainTitle {
+  background: linear-gradient(90deg, #5b4fd7, #c35baf, #e57cd9, #7f7de1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 12px rgba(180, 140, 240, 0.25);
+
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+
+}
+.secTitle {
+  background: linear-gradient(90deg, #5b4fd7, #c35baf, #e57cd9, #7f7de1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 12px rgba(180, 140, 240, 0.25);
+
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+
+}
+/* --- Text typing gradient mềm hơn --- */
+.typedText {
+  background: linear-gradient(90deg, #5b4fd7, #c35baf, #e57cd9, #7f7de1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 2.8rem;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(200, 160, 255, 0.25);
+}
+
+.heroVisual {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.robotImage {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  filter: drop-shadow(0 20px 30px rgba(90, 80, 180, 0.4));
+  animation: floatRotate3D 12s ease-in-out infinite;
+}
+@keyframes floatRotate3D {
+  0% { transform: translateY(0) rotateY(0deg) rotateX(0deg); }
+  25% { transform: translateY(-15px) rotateY(15deg) rotateX(5deg); }
+  50% { transform: translateY(0) rotateY(0deg) rotateX(0deg); }
+  75% { transform: translateY(-15px) rotateY(-15deg) rotateX(-5deg); }
+  100% { transform: translateY(0) rotateY(0deg) rotateX(0deg); }
+}
+/* ---- Grid Layout cho các Card ---- */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+/* ---- Thiết kế cho từng Card ---- */
+.card {
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-12px);
+  box-shadow: var(--shadow-md);
+}
+
+.cardIcon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  margin: 0 0 12px 0;
+  color: var(--text-primary);
+}
+
+.cardDescription {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  flex-grow: 1; /* Đẩy footer xuống dưới */
+  margin-bottom: 20px;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--primary-color);
+  font-weight: 600;
+  border-top: 1px solid var(--border-color);
+  padding-top: 16px;
+  margin-top: auto; /* Đảm bảo footer luôn ở cuối */
+}
+.scrollDownIcon {
+  color: var(--text-secondary);
+  font-size: 3rem;
+  animation: bounce 2.5s infinite;
+  opacity: 0.8;
+}
+.scrollDownContainer {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.mouse {
+    width: 30px;
+    height: 50px;
+    border: 2px solid rgba(7, 3, 3, 0.7);
+    border-radius: 60px;
+    position: relative;
+}
+
+.mouse .scroller {
+    width: 4px;
+    height: 10px;
+    border-radius: 25%;
+    background-color: rgba(15, 7, 7, 0.7);
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scroller 2.2s infinite;
+    opacity: 0;
+}
+
+@keyframes scroller {
+    0% {
+        opacity: 0;
+        top: 10px;
+    }
+    40% {
+        opacity: 1;
+        top: 20px;
+    }
+    80% {
+        opacity: 0;
+        top: 30px;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+.titleWrapper {
+  text-align: center;
+  margin-bottom: 60px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #6c63ff, #c62b94);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+

@@ -1,0 +1,48 @@
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 40px; /* Khoảng cách giữa các phần */
+}
+
+/* ---- Hero Section ---- */
+.heroSection {
+  padding: 40px;
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius);
+  text-align: center;
+  border: 1px solid var(--border-color);
+}
+
+.heroTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 16px 0;
+}
+
+.heroSubtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.wrapper {
+  padding: 20px;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: left;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table th {
+  background-color: #f4f4f4;
+}

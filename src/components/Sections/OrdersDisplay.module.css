@@ -1,0 +1,186 @@
+/* src/components/Sections/OrdersDisplay.module.css */
+
+.wrapper {
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.wrapper h2 {
+  margin-bottom: 20px;
+}
+.refreshButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.refreshButton:hover {
+  background-color: var(--background-light);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.refreshButton svg {
+  transition: transform 0.5s ease;
+}
+
+.refreshButton:active svg {
+  transform: rotate(180deg);
+}
+
+.recentOrderCard {
+  position: relative;
+  background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+  color: white;
+  border-radius: var(--border-radius);
+  padding: 8px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-lg);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.recentOrderCard.collapsed {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.recentOrderCard.collapsed .recentOrderBody {
+  max-height: 0;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.recentOrderHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+.toggleButton {
+  position: absolute;
+  top: 15px;            
+  right: 15px;         
+  background-color: rgba(255, 255, 255, 0.2); /* Nền mờ */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Viền mờ */
+  color: white;
+  cursor: pointer;
+  width: 32px;  /* Đặt kích thước cố định */
+  height: 32px;
+  border-radius: 50%; /* Bo tròn */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.toggleButton:hover {
+  background-color: rgba(255, 255, 255, 0.3); /* Đậm hơn khi hover */
+  transform: scale(1.1);
+}
+
+.toggleButton svg {
+  transition: transform 0.4s ease;
+}
+
+.recentOrderCard.collapsed .toggleButton svg {
+  transform: rotate(-180deg); /* Xoay icon khi thu nhỏ */
+}
+.recentOrderHeader h4 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.recentOrderBody {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.recentOrderBody p {
+  margin: 0;
+  font-size: 0.95rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 6px;
+  border-radius: 5px;
+}
+
+.recentOrderBody p strong {
+  opacity: 0.8;
+}
+
+.iframeContainer {
+  flex-grow: 1; /* Cho phép iframe chiếm hết không gian còn lại */
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  overflow: hidden; /* Ẩn các phần thừa của iframe */
+}
+
+.iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.refreshNote {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: right;
+  margin-top: -15px; /* Kéo lên gần nút hơn */
+  margin-bottom: 20px;
+  padding-right: 5px;
+  line-height: 1.4;
+}
+.errorText {
+  color: #c62b94;
+  background-color: rgba(255, 224, 224, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.productList {
+  grid-column: 1 / -1; /* Cho phép mục này chiếm toàn bộ chiều rộng của grid */
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.productList strong {
+  display: block;
+  margin-bottom: 5px;
+  opacity: 0.9;
+}
+
+.productList ul {
+  list-style-type: none;
+  padding-left: 10px;
+  margin: 0;
+}
+
+.productList li {
+  padding: 2px 0;
+}

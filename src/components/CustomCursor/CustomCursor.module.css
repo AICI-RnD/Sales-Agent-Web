@@ -1,0 +1,35 @@
+CustomCursor.module.css
+body {
+    cursor: none;
+}
+
+.cursor, .dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.2s ease-out, width 0.2s ease-out, height 0.2s ease-out, border-color 0.2s ease-out;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--grad-1);
+    transition: transform 0.1s ease-out;
+}
+
+.cursor {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--grad-2);
+}
+
+.cursor.hover {
+    width: 60px;
+    height: 60px;
+    border-color: var(--grad-3);
+    transform: translate(-50%, -50%) scale(1.2);
+}

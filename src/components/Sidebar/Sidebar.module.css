@@ -1,0 +1,132 @@
+.sidebar {
+  background-color: var(--surface-color);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  animation: slideInUp 0.5s ease-out;
+}
+
+/* ---- Tiêu đề động của Sidebar ---- */
+.header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 800;
+  background: var(--primary-gradient);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* ---- Khu vực điều hướng chính ---- */
+.nav {
+  padding: 16px;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Tăng khoảng cách */
+}
+
+/* ---- Thiết kế cho từng mục menu (button) ---- */
+.nav button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+  padding: 14px 18px;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border: 1px solid transparent;
+  background-color: transparent;
+  text-align: left;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* HIỆU ỨNG KHI RÊ CHUỘT */
+.nav button:hover {
+  background-color: var(--background-light);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* Hiệu ứng khi nhấn */
+.nav button:active {
+    transform: scale(0.97);
+    background-color: #e9e7f5;
+}
+
+/* TRẠNG THÁI ACTIVE - ĐIỂM NHẤN QUAN TRỌNG NHẤT */
+.nav button.active {
+  background: var(--primary-gradient);
+  color: var(--grad-white);
+  box-shadow: var(--shadow-lg);
+  font-weight: 800;
+  border-color: transparent;
+}
+
+/* Style cho icon và text bên trong button */
+.icon {
+  font-size: 1.3rem;
+  width: 24px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.nav button:hover .icon {
+    transform: scale(1.1);
+}
+
+.text {
+    flex-grow: 1;
+}
+
+/* Khi button active, icon cũng đổi màu theo */
+.nav button.active .icon,
+.nav button.active .text {
+    color: var(--grad-white);
+}
+
+/* ---- Thiết kế lại Placeholder ---- */
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 20px;
+  animation: fadeIn 1s;
+}
+
+.placeholder svg {
+    font-size: 2.5rem;
+    color: var(--grad-3);
+    margin-bottom: 1rem;
+    animation: pulse 2s infinite;
+}
+
+.placeholder p {
+  margin-top: 16px;
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 600;
+}

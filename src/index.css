@@ -1,0 +1,82 @@
+/* Import font chữ hiện đại từ Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap');
+
+/* Định nghĩa các biến CSS cho toàn bộ dự án */
+:root {
+  /* Bảng màu Gradient mới */
+  --grad-1: #48469d;
+  --grad-2: #c62b94;
+  --grad-3: #a69ec0;
+  --grad-white: #ffffff;
+  
+  /* Tạo dải màu gradient chính */
+  --primary-gradient: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+  --secondary-gradient: linear-gradient(135deg, var(--grad-3), var(--grad-1));
+
+  /* Màu sắc hỗ trợ */
+  --primary-color: var(--grad-1); /* Giữ lại một màu chính để dùng khi không cần gradient */
+  --primary-hover: #3a387a;
+  --secondary-color: #6c757d;
+  --background-light: #fcfcff; /* Một màu trắng rất nhẹ, không phải trắng tinh */
+  --surface-color: #FFFFFF;
+  --text-primary: #1a1a2e; /* Màu chữ tối hơn, dễ đọc hơn */
+  --text-secondary: #5a5a72;
+  --border-color: #e0e0e6;
+
+  --success-color: #28a745;
+  --bot-message-bg: #f0f2f5;
+  --user-message-bg: var(--primary-gradient);
+
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-md: 0 6px 12px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 20px rgba(72, 70, 157, 0.15); /* Bóng đổ với màu sắc của gradient */
+  --border-radius: 10px; /* Bo góc lớn hơn một chút */
+}
+
+/* Reset và cài đặt font chữ mặc định */
+body {
+  margin: 0;
+  font-family: 'Nunito Sans', sans-serif;
+  background-color: var(--background-light);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* --- Keyframes cho hiệu ứng động --- */
+
+/* Hiệu ứng xuất hiện mờ dần */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Hiệu ứng trượt từ dưới lên và mờ dần */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hiệu ứng rung nhẹ cho thông báo hoặc icon */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Hiệu ứng nền gradient chuyển động */
+@keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}

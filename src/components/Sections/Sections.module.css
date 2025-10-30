@@ -1,0 +1,101 @@
+/* 
+  Shared styles for all content sections.
+  This helps maintain a consistent look and feel for titles, paragraphs, etc.
+*/
+
+.section {
+  animation: slideInUp 0.6s ease-out;
+}
+
+.title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  
+  /* Gradient Text Effect */
+  background: var(--primary-gradient);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  /* Animated Background Position */
+  background-size: 200% 200%;
+  animation: gradient-animation 8s ease infinite;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--primary-color);
+  padding-left: 1rem;
+}
+
+.paragraph {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.card {
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.subSection {
+  width: 100%;
+  min-height: 80vh; /* Chiều cao tối thiểu cho mỗi mục con */
+  padding: 80px 40px;
+  border-bottom: 1px dashed var(--border-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.subSection:last-child {
+  border-bottom: none;
+}
+
+.subSection h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+.subSection p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  max-width: 800px;
+}
+
+.word {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  
+  /* Gradient Text Effect */
+  background: var(--primary-gradient);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  /* Animated Background Position */
+  background-size: 200% 200%;
+  animation: gradient-animation 8s ease infinite;
+}

@@ -1,0 +1,43 @@
+/* src/pages/HomePage/HomePage.module.css */
+
+/* Layout mặc định với 3 cột cho các trang agent */
+.homePage {
+  display: grid;
+  grid-template-columns: 240px 1fr 500px; /* Sidebar | Main Content | Chatbot */
+  grid-template-rows: 60px 1fr; /* Header | Content */
+  grid-template-areas:
+    'header header header'
+    'sidebar main chatbot';
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* Layout đặc biệt cho trang Home (không có sidebar và chatbot) */
+.homePage.isHome {
+  grid-template-columns: 1fr; /* Chỉ có Main Content */
+  grid-template-rows: 60px 1fr; /* Header | Content */
+  grid-template-areas:
+    'header'
+    'main';
+}
+
+/* Gán các component vào vùng của chúng */
+.homePage > header {
+  grid-area: header;
+}
+
+.homePage > aside {
+  grid-area: sidebar;
+}
+
+.homePage > main {
+  grid-area: main;
+  overflow-y: auto; /* Scrollbar chính cho toàn bộ nội dung */
+}
+
+/* This targets the chatbot component */
+.homePage > .chatbot { /* More specific selector */
+  grid-area: chatbot;
+  overflow: hidden;
+}

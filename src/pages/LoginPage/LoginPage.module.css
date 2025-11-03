@@ -1,0 +1,195 @@
+/* Định nghĩa các biến màu gradient của bạn */
+:root {
+  --grad-1: #48469d;
+  --grad-2: #c62b94;
+  --grad-3: #a69ec0;
+  --grad-white: #ffffff;
+}
+
+/* === HIỆU ỨNG ĐỘNG ROBOT === */
+
+/* Hiệu ứng cho form xuất hiện */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Hiệu ứng "nhịp thở" (pulsing glow) cho form */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 0 10px rgba(166, 158, 192, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), 0 0 20px rgba(166, 158, 192, 0.7);
+  }
+  100% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 0 10px rgba(166, 158, 192, 0.3);
+  }
+}
+
+/* === LAYOUT CHÍNH === */
+
+.loginContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  /* Nền gradient toàn màn hình */
+  background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+  overflow: hidden; /* Ngăn scroll */
+}
+
+/* Logo ở góc trái trên */
+.logo {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  padding: 0.5rem;
+}
+
+.logo img {
+  width: 200px;
+  height: auto;
+  filter: brightness(2) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.logo:hover {
+  opacity: 1;
+}
+
+/* === FORM ĐĂNG NHẬP (Glassmorphism) === */
+
+.loginForm {
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  
+  /* Hiệu ứng kính mờ (Glassmorphism) */
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+  /* Thêm hiệu ứng động */
+  position: absolute; /* Cần cho transform */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: 
+    fadeInUp 0.8s ease-out forwards,
+    pulseGlow 4s infinite ease-in-out;
+}
+
+.loginForm h2 {
+  margin-bottom: 2rem;
+  color: var(--grad-white); /* Đổi màu chữ sang trắng */
+  font-size: 1.8rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* === CÁC TRƯỜNG INPUT === */
+
+.inputGroup {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.inputGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--grad-3); /* Dùng màu tím nhạt cho label */
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  box-sizing: border-box;
+  
+  /* Thiết kế lại input */
+  background: rgba(0, 0, 0, 0.2); /* Nền tối, trong suốt */
+  border: 1px solid var(--grad-3);
+  border-radius: 6px;
+  color: var(--grad-white); /* Màu chữ trắng */
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inputGroup input::placeholder {
+  color: var(--grad-3);
+}
+
+/* Hiệu ứng "robot" khi focus vào input */
+.inputGroup input:focus {
+  outline: none;
+  border-color: var(--grad-2); /* Màu hồng khi focus */
+  box-shadow: 0 0 10px rgba(198, 43, 148, 0.5); /* Tỏa sáng màu hồng */
+}
+
+/* === NÚT ĐĂNG NHẬP & LỖI === */
+
+.loginButton {
+  width: 100%;
+  padding: 0.85rem;
+  border: none;
+  border-radius: 6px;
+  
+  /* Nút bấm gradient */
+  background: linear-gradient(90deg, var(--grad-1), var(--grad-2));
+  background-size: 200% 100%; /* Dùng cho hiệu ứng hover */
+  
+  color: var(--grad-white);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-position 0.4s ease, transform 0.1s ease;
+  margin-top: 1rem;
+}
+
+/* Hiệu ứng "robot" khi hover nút */
+.loginButton:hover {
+  background-position: 100% 0; /* Chuyển gradient */
+  box-shadow: 0 0 15px rgba(198, 43, 148, 0.6);
+}
+
+.loginButton:active {
+  transform: scale(0.98); /* Hiệu ứng nhấn xuống */
+}
+
+.error {
+  color: #ffcdd2; /* Màu đỏ nhạt hơn cho dễ đọc trên nền tối */
+  background: rgba(255, 0, 0, 0.15);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.mainTitle {
+  background: linear-gradient(90deg, #5b4fd7, #c35baf, #e57cd9, #7f7de1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 12px rgba(180, 140, 240, 0.25);
+
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 4rem;
+  font-weight: 200;
+  letter-spacing: 0.5px;
+
+}

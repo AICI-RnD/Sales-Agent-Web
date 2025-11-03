@@ -6,59 +6,43 @@ const ChatContext = createContext();
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-// =================================================================
-// NÂNG CẤP V6: Thêm hằng số và hàm chia nhỏ theo ký tự
-// =================================================================
-const MAX_CHAR_PER_CHUNK = 300; // Giới hạn ký tự mỗi tin nhắn
+const TYPING_MESSAGES = [
+  "Đợi mình tí, mình mới vô nghề, gõ tin nhắn hơi chậm xí...😎",
+  "Hmm, để ní xem nào... 🤔",
+  "Dạ em đang tìm thông tin ạ...",
+  "Xin chờ một lát nhé! 🤓",
+  "Để em kiểm tra nhaaaaa...",
+  "Đợi mình hỏi sếp phát nha...😅",
+];
 
-/**
- * Hàm chia nhỏ một chunk văn bản dài thành nhiều chunk nhỏ hơn.
- * Ưu tiên ngắt tại dấu cách hoặc dấu chấm gần giới hạn.
- * @param {string} text - Đoạn văn bản cần chia.
- * @param {number} limit - Số ký tự tối đa.
- * @returns {string[]} - Mảng các đoạn văn bản đã chia nhỏ.
- */
+const getRandomTypingText = () => TYPING_MESSAGES[Math.floor(Math.random() * TYPING_MESSAGES.length)];
+
+// Hằng số và hàm chia nhỏ từ V6 (Giữ nguyên)
+const MAX_CHAR_PER_CHUNK = 300; 
 const splitChunkSmartly = (text, limit) => {
-  if (text.length <= limit) {
-    return [text];
-  }
-
+  if (text.length <= limit) return [text];
   const chunks = [];
   let currentText = text;
-
   while (currentText.length > 0) {
     if (currentText.length <= limit) {
       chunks.push(currentText);
       break;
     }
-
-    // Tìm vị trí ngắt lý tưởng (dấu cách, dấu chấm) gần giới hạn
     let breakPos = -1;
-    // Thử tìm dấu cách
     breakPos = currentText.lastIndexOf(' ', limit);
-    // Nếu không có dấu cách, thử tìm dấu chấm
-    if (breakPos === -1) {
-      breakPos = currentText.lastIndexOf('.', limit);
-    }
-    // Nếu không tìm thấy cả hai, hoặc vị trí quá xa (ví dụ: ở đầu), thì cắt cứng
-    if (breakPos === -1 || breakPos < limit * 0.7) {
-      breakPos = limit;
-    }
-
-    // Lấy chunk và phần còn lại
+    if (breakPos === -1) breakPos = currentText.lastIndexOf('.', limit);
+    if (breakPos === -1 || breakPos < limit * 0.7) breakPos = limit;
     chunks.push(currentText.substring(0, breakPos).trim());
     currentText = currentText.substring(breakPos).trim();
   }
-
   return chunks;
 };
 // =================================================================
 
+
 export const ChatProvider = ({ children }) => {
   const [state, dispatch] = useReducer(chatReducer, initialState);
 
-  // Tạo một hàm gửi tin nhắn lỗi "set cứng"
-  // (Tôi thấy bạn đã đổi câu này, tôi sẽ giữ nguyên)
   const sendHardcodedError = (agentId) => {
     const errorMessage = {
       id: Date.now(),
@@ -69,79 +53,83 @@ export const ChatProvider = ({ children }) => {
   };
 
   const sendMessage = async (agentId, chatId, userMessage) => {
+    // 1. Gửi tin nhắn của người dùng
     dispatch({ type: 'ADD_MESSAGE', payload: { agentId, message: userMessage } });
-    dispatch({ type: 'SET_TYPING', payload: { agentId, isTyping: true } });
-
+    
+    // 2. THAY ĐỔI: Bật typing "chuẩn" trong khi chờ API
+    dispatch({ type: 'SET_TYPING_TEXT', payload: { agentId, text: "Xin chờ mình một lát nhé! 🤓" } });
     const botReplyText = await getBotResponse(agentId, chatId, userMessage.text);
 
-    dispatch({ type: 'SET_TYPING', payload: { agentId, isTyping: false } });
+    // 3. THAY ĐỔI: Tắt typing "chuẩn"
+    dispatch({ type: 'SET_TYPING_TEXT', payload: { agentId, text: null } });
 
-    // =================================================================
-    // NÂNG CẤP V6: Tích hợp logic chia theo ký tự
-    // =================================================================
-
-    // 1. Xử lý node --end-- (khi backend trả về input)
+    // 4. Xử lý node --end-- (Như cũ)
     if (botReplyText === '__SILENT_END__') {
-      return; // Dừng, không làm gì cả, không báo lỗi.
+      return; 
     }
 
-    // 2. Bọc logic cũ trong try...catch
     try {
-      // 3. Xử lý khi Backend không trả về nội dung (Falsy)
+      // 5. Xử lý lỗi Falsy (Như cũ)
       if (!botReplyText || botReplyText.trim() === '') {
-        sendHardcodedError(agentId); // Gửi lỗi
-        return; // Dừng
+        sendHardcodedError(agentId); 
+        return; 
       }
 
-      // 4. Chia tin nhắn "thông minh" (Vẫn như cũ)
+      // 6. Chia tin nhắn thông minh (Như cũ - V6)
       const doubleNewlineRegex = /\n\s*\n/;
       const replyString = String(botReplyText);
       let initialChunks = [];
-
       if (doubleNewlineRegex.test(replyString)) {
-        // Ưu tiên chia theo CÁC KHỐI VĂN BẢN
-        initialChunks = replyString
-          .split(doubleNewlineRegex)
-          .map(chunk => chunk.trim())
-          .filter(chunk => chunk.length > 0);
+        initialChunks = replyString.split(doubleNewlineRegex).map(chunk => chunk.trim()).filter(chunk => chunk.length > 0);
       } else {
-        // Nếu không có khối, chia theo TỪNG DÒNG
-        initialChunks = replyString
-          .split('\n')
-          .filter(chunk => chunk.trim().length > 0);
+        initialChunks = replyString.split('\n').filter(chunk => chunk.trim().length > 0);
       }
       
-      // 5. NÂNG CẤP V6: Xử lý các chunk quá dài
       const finalMessageChunks = [];
       for (const chunk of initialChunks) {
-        // Nếu chunk ngắn, thêm vào
         if (chunk.length <= MAX_CHAR_PER_CHUNK) {
           finalMessageChunks.push(chunk);
         } else {
-          // Nếu chunk quá dài, dùng hàm chia nhỏ và thêm các phần con vào
           const subChunks = splitChunkSmartly(chunk, MAX_CHAR_PER_CHUNK);
           finalMessageChunks.push(...subChunks);
         }
       }
 
-      // 6. Lặp qua từng phần (đã được chia nhỏ) và gửi chúng
+      // =================================================================
+      // 7. NÂNG CẤP V7: Thay đổi vòng lặp gửi tin nhắn
+      // =================================================================
       for (const [index, chunk] of finalMessageChunks.entries()) {
+        
+        // A. BẬT typing ngẫu nhiên
+        const randomText = getRandomTypingText();
+        dispatch({ type: 'SET_TYPING_TEXT', payload: { agentId, text: randomText } });
+        
+        // B. CHỜ (Đây chính là 3000ms của bạn, giờ nó là "thời gian gõ")
+        await delay(3000); 
+        
+        // C. TẮT typing
+        dispatch({ type: 'SET_TYPING_TEXT', payload: { agentId, text: null } });
+
+        // D. GỬI tin nhắn thật
         const botMessage = {
           id: Date.now() + index,
           text: chunk,
           sender: 'bot',
         };
         dispatch({ type: 'ADD_MESSAGE', payload: { agentId, message: botMessage } });
+
+        // E. Chờ 0.5s trước khi lặp lại (cho tự nhiên)
         if (index < finalMessageChunks.length - 1) {
-          // Lấy độ trễ từ file của bạn
-          await delay(3000); 
+          await delay(500); 
         }
       }
+      // =================================================================
+
     } catch (error) {
       console.error("Lỗi khi xử lý/chia nhỏ tin nhắn bot:", error);
-      sendHardcodedError(agentId); // Gửi tin nhắn lỗi "set cứng"
+      dispatch({ type: 'SET_TYPING_TEXT', payload: { agentId, text: null } }); // Tắt typing nếu lỗi
+      sendHardcodedError(agentId);
     }
-    // =================================================================
   };
   
   const resetSession = (agentId) => {

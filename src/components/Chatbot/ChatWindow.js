@@ -56,6 +56,8 @@ const ChatWindow = () => {
     return <div className={styles.loading}>Đang tải cuộc hội thoại...</div>;
   }
 
+  const isBotTyping = !!currentConversation.typingText;
+
   return (
     <div className={styles.chatWindow}>
       <div className={styles.chatHeader}>
@@ -73,7 +75,7 @@ const ChatWindow = () => {
             <p>{msg.text}</p>
           </div>
         ))}
-        {currentConversation.isTyping && <TypingIndicator />}
+        {isBotTyping && <TypingIndicator text={currentConversation.typingText} />}
         <div ref={messagesEndRef} />
       </div>
       <form className={styles.chatInputForm} onSubmit={handleSendMessage}>
@@ -82,9 +84,10 @@ const ChatWindow = () => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="Nhập tin nhắn..."
-          disabled={currentConversation.isTyping}
+          // THAY ĐỔI: Vô hiệu hóa khi 'isBotTyping' là true
+          disabled={isBotTyping}
         />
-        <button type="submit" disabled={!inputValue.trim() || currentConversation.isTyping}>
+        <button type="submit" disabled={!inputValue.trim() || isBotTyping}>
           <FaPaperPlane />
         </button>
       </form>

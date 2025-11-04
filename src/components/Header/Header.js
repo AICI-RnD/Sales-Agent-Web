@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from './Header.module.css';
-import { useView } from '../../context/ActiveAgentContext'; // Import hook mới
+import { useView } from '../../context/ActiveAgentContext'; // Import hook
+import { useAuth } from '../../context/AuthContext'; // Import hook Auth
+import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa'; // Import icons
 
 const Header = () => {
   const { setActiveView, activeView } = useView();
+  const { logout } = useAuth(); // Lấy hàm logout từ AuthContext
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const navLinks = [
     // Thêm 'defaultView' để biết click vào sẽ mở mục con nào đầu tiên
@@ -13,24 +18,69 @@ const Header = () => {
     { agentId: 'education-bot', text: 'Education Agent', defaultView: 'education-bot-main' },
   ];
 
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const handleLogout = () => {
+    setDropdownOpen(false);
+    logout();
+  };
+  
+
+  // Xử lý click ra ngoài để đóng dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+
   return (
     <header className={styles.header}>
         <div className={styles.logo}><img src="\logo-aici.png" alt="Logo" className={styles.logoImage} /></div>
-      <nav className={styles.nav}>
-        {navLinks.map(link => {
-          // Xác định xem header link có active không (bằng cách check activeView có bắt đầu bằng agentId không)
-          const isActive = activeView.startsWith(link.agentId);
-          return (
-            <button
-              key={link.agentId}
-              className={isActive ? styles.active : ''}
-              onClick={() => setActiveView(link.defaultView)}
-            >
-              {link.text}
-            </button>
-          );
-        })}
-      </nav>
+      
+      {/* Thêm một div bọc cho các mục bên phải */}
+      <div className={styles.headerRight}>
+        <nav className={styles.nav}>
+          {navLinks.map(link => {
+            // Xác định xem header link có active không (bằng cách check activeView có bắt đầu bằng agentId không)
+            const isActive = activeView.startsWith(link.agentId);
+            return (
+              <button
+                key={link.agentId}
+                className={isActive ? styles.active : ''}
+                onClick={() => setActiveView(link.defaultView)}
+              >
+                {link.text}
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* PHẦN MỚI: User Profile Avatar và Dropdown */}
+        <div className={styles.userProfile} ref={dropdownRef}>
+          <button onClick={toggleDropdown} className={styles.avatarButton}>
+            <FaUserCircle />
+          </button>
+          
+          {dropdownOpen && (
+            <div className={styles.dropdownMenu}>
+              <button onClick={handleLogout}>
+                <FaSignOutAlt /> Đăng xuất
+              </button>
+            </div>
+          )}
+        </div>
+        {/* HẾT PHẦN MỚI */}
+
+      </div>
     </header>
   );
 };

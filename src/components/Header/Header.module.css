@@ -86,3 +86,75 @@
 .nav button.active::before {
   width: 100%;
 }
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Khoảng cách giữa nav và avatar */
+}
+
+.userProfile {
+  position: relative; /* Quan trọng để định vị dropdown */
+}
+
+.avatarButton {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 2.2rem; /* Kích thước icon avatar */
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.avatarButton:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 10px); /* Vị trí dưới avatar */
+  right: 0;
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  padding: 0.5rem;
+  z-index: 100;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  animation: fadeIn 0.2s ease-out; /* Tái sử dụng animation fadeIn */
+}
+
+.dropdownMenu button {
+  background: none;
+  border: none;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* Khoảng cách giữa icon và chữ */
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap; /* Đảm bảo chữ không bị vỡ dòng */
+}
+
+.dropdownMenu button:hover {
+  background-color: var(--background-light);
+  color: var(--primary-color);
+}
+
+.dropdownMenu button svg {
+  font-size: 1.1rem;
+  opacity: 0.7;
+}

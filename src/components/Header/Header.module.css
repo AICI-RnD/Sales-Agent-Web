@@ -111,6 +111,13 @@
   transition: all 0.3s ease;
 }
 
+
+/* CẬP NHẬT: Điều chỉnh lại icon một chút */
+.avatarButton svg {
+  font-size: 1.8rem; /* Giảm kích thước icon 1 chút */
+  flex-shrink: 0; /* Không co icon lại */
+}
+
 .avatarButton:hover {
   color: white;
   background-color: rgba(255, 255, 255, 0.2);
@@ -130,6 +137,32 @@
   flex-direction: column;
   gap: 0.25rem;
   animation: fadeIn 0.2s ease-out; /* Tái sử dụng animation fadeIn */
+}
+
+.dropdownUserInfo {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 0.25rem;
+  text-align: left;
+}
+
+.dropdownUserInfo h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdownUserInfo span {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block; /* Đảm bảo nó chiếm 1 dòng */
 }
 
 .dropdownMenu button {

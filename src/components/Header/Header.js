@@ -6,7 +6,7 @@ import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa'; // Import icons
 
 const Header = () => {
   const { setActiveView, activeView } = useView();
-  const { logout } = useAuth(); // Lấy hàm logout từ AuthContext
+  const { logout, user } = useAuth(); // Lấy hàm logout từ AuthContext
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -64,21 +64,26 @@ const Header = () => {
           })}
         </nav>
 
-        {/* PHẦN MỚI: User Profile Avatar và Dropdown */}
         <div className={styles.userProfile} ref={dropdownRef}>
           <button onClick={toggleDropdown} className={styles.avatarButton}>
+            {/* CHỈ CÓ ICON */}
             <FaUserCircle />
           </button>
           
           {dropdownOpen && (
             <div className={styles.dropdownMenu}>
+              {/* MỚI: Thêm phần hiển thị thông tin user */}
+              <div className={styles.dropdownUserInfo}>
+                <h4>{user?.username || 'User'}</h4>
+                <span>{user?.email}</span>
+              </div>
+            
               <button onClick={handleLogout}>
                 <FaSignOutAlt /> Đăng xuất
               </button>
             </div>
           )}
         </div>
-        {/* HẾT PHẦN MỚI */}
 
       </div>
     </header>

@@ -11,18 +11,21 @@ import { useView } from '../../context/ActiveAgentContext';
 const HomePageWrapper = () => {
   const { activeView } = useView();
   const isHomePage = activeView.startsWith('home');
+  const isAdminPage = activeView.startsWith('AICIGLOBAL_DEV'); // Thêm dòng này
 
-  // Sử dụng một class riêng cho trang Home để thay đổi layout
-  const homePageClass = isHomePage
+  // Ẩn sidebar/chat nếu là trang Home HOẶC trang Admin
+  const isFullWidthPage = isHomePage || isAdminPage;
+
+  const homePageClass = isFullWidthPage
     ? `${styles.homePage} ${styles.isHome}`
     : styles.homePage;
 
   return (
     <div className={homePageClass}>
       <Header />
-      {!isHomePage && <Sidebar />}
+      {!isFullWidthPage && <Sidebar />}
       <MainContent />
-      {!isHomePage && <Chatbot />}
+      {!isFullWidthPage && <Chatbot />}
     </div>
   );
 };

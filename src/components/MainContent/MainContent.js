@@ -20,8 +20,11 @@ import IntroEdu from '../Sections/EducationBot/Intro';
 import ProductsEdu from '../Sections/EducationBot/Products';
 
 import OrdersDisplay from '../Sections/OrdersDisplay';
+
+import AdminStats from '../Sections/Admin/AdminStats';
 // Một mapping đơn giản từ 'view' sang component cho các trang Agent
 const viewMap = {
+    'admin-stats': <AdminStats />,
     'ecommerce-bot-intro': <Intro />,
     'ecommerce-bot-products': <Products />,
     'ecommerce-bot-orders': <OrdersDisplay agentId="ecommerce-bot" />,

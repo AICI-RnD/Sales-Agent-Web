@@ -1,0 +1,102 @@
+/* src/components/Sections/Admin/AdminStats.module.css */
+
+.wrapper {
+  padding: 40px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.error {
+  color: #c62b94;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+/* === Thẻ Tóm Tắt === */
+.statCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--surface-color);
+  padding: 24px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--grad-1);
+}
+
+.card .icon {
+  font-size: 2.5rem;
+  padding: 12px;
+  border-radius: 50%;
+  color: var(--grad-white);
+  background: var(--primary-gradient);
+}
+
+.cardInfo .value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: block;
+  line-height: 1.2;
+}
+
+.cardInfo .label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* === Bảng Dữ Liệu === */
+.tableContainer {
+  width: 100%;
+  overflow-x: auto; /* Cho phép cuộn ngang nếu bảng quá rộng */
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.statsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.statsTable th,
+.statsTable td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.statsTable th {
+  background-color: var(--background-light);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.statsTable tbody tr:hover {
+  background-color: #fcfcff;
+}
+
+.statsTable td:nth-child(4),
+.statsTable td:nth-child(5) {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--grad-1);
+}

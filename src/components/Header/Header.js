@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import styles from './Header.module.css';
 import { useView } from '../../context/ActiveAgentContext'; // Import hook
 import { useAuth } from '../../context/AuthContext'; // Import hook Auth
-import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa'; // Import icons
+import { FaUserCircle, FaSignOutAlt, FaShieldAlt } from 'react-icons/fa';
 
 const Header = () => {
   const { setActiveView, activeView } = useView();
@@ -62,6 +62,17 @@ const Header = () => {
               </button>
             );
           })}
+          {/* Kiểm tra nếu user tồn tại và username là 'admin' */}
+          {user && user.username === 'AICIGLOBAL_DEV' && (
+            <button
+              key="admin-stats"
+              className={activeView.startsWith('AICIGLOBAL_DEV') ? styles.active : ''}
+              onClick={() => setActiveView('admin-stats')}
+            >
+              <FaShieldAlt style={{ marginRight: '8px' }} />
+              Quản lý
+            </button>
+          )}
         </nav>
 
         <div className={styles.userProfile} ref={dropdownRef}>

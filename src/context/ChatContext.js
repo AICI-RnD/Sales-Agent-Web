@@ -28,10 +28,7 @@ const MIN_TYPING_DELAY = 800; // Tối thiểu 0.8s (để user kịp thấy "ty
 const MAX_TYPING_DELAY = 3500; // Tối đa 3.5s (tránh chờ quá lâu)
 // =================================================================
 
-
-// ==========================================
-// V8.2 - Smart Split (Giữ nguyên, logic này đã tốt)
-// ==========================================
+// =================================================================
 const splitChunkSmartly = (text, limit) => {
   if (!text) return [];
   text = text.trim();
@@ -41,56 +38,23 @@ const splitChunkSmartly = (text, limit) => {
   const result = [];
 
   for (let para of paragraphs) {
-    // Sửa lỗi ESLint: Bỏ dấu \ không cần thiết trước dấu .
-    const isBulletList = /^[-•\d+.]/m.test(para); 
+    const isBulletList = /^[-•\d+.]/m.test(para);
 
-    // 🟢 Nếu là danh sách bullet (vd: - Cài đặt, 1. Giới thiệu)
+    // 🟢 V11: THAY ĐỔI TẠI ĐÂY
+    // Nếu là danh sách bullet → Gộp chung làm 1 tin nhắn, BẤT KỂ độ dài.
     if (isBulletList) {
-      const bullets = para.split(/\n+/).map(line => line.trim()).filter(Boolean);
-      const combinedLength = bullets.join(' ').length;
-
-      // ✅ Nếu danh sách tổng < limit → gộp nguyên block
-      if (combinedLength <= limit) {
-        result.push(bullets.join('\n'));
-      } else {
-        // 🔥 Nếu danh sách dài → cắt theo từng bullet
-        for (let bullet of bullets) {
-          if (bullet.length <= limit) {
-            result.push(bullet);
-          } else {
-            // Nếu 1 bullet quá dài → cắt nhỏ theo dấu chấm câu
-            let remaining = bullet;
-            while (remaining.length > 0) {
-              if (remaining.length <= limit) {
-                result.push(remaining.trim());
-                break;
-              }
-
-              let breakPos =
-                remaining.lastIndexOf('. ', limit) ||
-                remaining.lastIndexOf(', ', limit) ||
-                remaining.lastIndexOf(' ', limit);
-
-              if (breakPos === -1 || breakPos < limit * 0.5) breakPos = limit;
-
-              let chunk = remaining.substring(0, breakPos).trim();
-              remaining = remaining.substring(breakPos).trimStart();
-              remaining = remaining.replace(/^[-.,!?;:]+/, '').trimStart();
-              result.push(chunk);
-            }
-          }
-        }
-      }
-      continue;
+      result.push(para); // Đẩy cả đoạn bullet list vào, không cắt
+      continue; // Bỏ qua các bước kiểm tra limit bên dưới
     }
+    // HẾT THAY ĐỔI V11
 
-    // 🟢 Nếu KHÔNG phải bullet list:
+    // 🟢 Nếu KHÔNG phải bullet list (Logic như cũ):
     if (para.length <= limit) {
       result.push(para);
       continue;
     }
 
-    // Nếu đoạn dài → chia thông minh
+    // Nếu đoạn dài → chia thông minh (Logic như cũ)
     let remaining = para;
     while (remaining.length > 0) {
       if (remaining.length <= limit) {
@@ -115,13 +79,18 @@ const splitChunkSmartly = (text, limit) => {
     }
   }
 
-  // ✅ Gộp đoạn ngắn với đoạn sau nếu <100 ký tự
+  // ✅ Gộp đoạn ngắn với đoạn sau nếu <100 ký tự (Logic như cũ)
   const merged = [];
   for (let i = 0; i < result.length; i++) {
     const current = result[i];
     const next = result[i + 1];
+    
+    // Cập nhật V11: Không gộp nếu ĐOẠN HIỆN TẠI là bullet
+    const isCurrentBullet = /^[-•\d+.]/m.test(current);
     // Không gộp nếu đoạn sau là bullet
-    if (current.length < 100 && next && !next.startsWith('-') && !next.startsWith('•') && !/^\d+\./.test(next)) {
+    const isNextBullet = next && (/^[-•\d+.]/m.test(next));
+
+    if (current.length < 100 && next && !isCurrentBullet && !isNextBullet) {
       merged.push(current + ' ' + next);
       i++;
     } else {

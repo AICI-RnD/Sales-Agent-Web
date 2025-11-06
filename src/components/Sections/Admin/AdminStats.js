@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import authService from '../../../services/authService'; // Dịch vụ Axios đã có
 import styles from './AdminStats.module.css'; // Sẽ tạo ở bước 2
 import sectionStyles from '../Sections.module.css'; // Dùng chung style title
-import { FaUsers, FaSignInAlt, FaMousePointer, FaClock } from 'react-icons/fa';
+import { FaUsers, FaSignInAlt, FaClock } from 'react-icons/fa';
 
 // Hàm helper để format ngày
 const formatDateTime = (isoString) => {
@@ -94,13 +94,13 @@ const AdminStats = () => {
             <span className={styles.label}>Tổng lượt Đăng nhập</span>
           </div>
         </div>
-        <div className={styles.card}>
+        {/* <div className={styles.card}>
           <FaMousePointer className={styles.icon} />
           <div className={styles.cardInfo}>
             <span className={styles.value}>{summary.totalApiHits}</span>
             <span className={styles.label}>Tổng lượt Dùng API</span>
           </div>
-        </div>
+        </div> */}
         <div className={styles.card}>
           <FaClock className={styles.icon} />
           <div className={styles.cardInfo}>
@@ -120,7 +120,7 @@ const AdminStats = () => {
               <th>Tài khoản (Username)</th>
               <th>Tên</th>
               <th>Lượt Đăng nhập</th>
-              <th>Lượt Dùng API</th>
+              {/* <th>Lượt Dùng API</th> */}
               <th>Đăng nhập Lần cuối</th>
             </tr>
           </thead>
@@ -131,7 +131,7 @@ const AdminStats = () => {
                 <td>{user.username}</td>
                 <td>{user.name}</td>
                 <td>{user.login_count}</td>
-                <td>{user.api_hits}</td>
+                {/* <td>{user.api_hits}</td> */}
                 <td>{formatDateTime(user.last_login)}</td>
               </tr>
             ))}

@@ -11,7 +11,7 @@ import { useView } from '../../context/ActiveAgentContext';
 const HomePageWrapper = () => {
   const { activeView } = useView();
   const isHomePage = activeView.startsWith('home');
-  const isAdminPage = activeView.startsWith('AICIGLOBAL_DEV'); // Thêm dòng này
+  const isAdminPage = activeView.startsWith('AICIGLOBAL_DEV') || activeView === 'admin-stats';
 
   // Ẩn sidebar/chat nếu là trang Home HOẶC trang Admin
   const isFullWidthPage = isHomePage || isAdminPage;

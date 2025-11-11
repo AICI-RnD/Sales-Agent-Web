@@ -54,7 +54,7 @@
   display: grid;
   place-items: center;
   position: relative;
-  min-height: 520px;
+  min-height: 400px;
   --wheel-radius: 190px;
   --item-size: 110px;
   perspective: 1000px; /* tạo chiều sâu 3D */

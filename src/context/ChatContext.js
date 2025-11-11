@@ -21,8 +21,6 @@ const getRandomTypingText = () => TYPING_MESSAGES[Math.floor(Math.random() * TYP
 // HẰNG SỐ CẤU HÌNH (V10)
 // =================================================================
 const MAX_CHAR_PER_CHUNK = 450;
-
-// V10 - Hằng số cho delay động (Tính toán thời gian gõ)
 const CHARS_PER_SECOND = 120; // Tốc độ gõ/đọc giả lập: 120 ký tự/giây
 const MIN_TYPING_DELAY = 800; // Tối thiểu 0.8s (để user kịp thấy "typing...")
 const MAX_TYPING_DELAY = 3500; // Tối đa 3.5s (tránh chờ quá lâu)
@@ -102,6 +100,58 @@ const splitChunkSmartly = (text, limit) => {
 };
 // =================================================================
 
+const mediaRegex = /(https?:\/\/[^\s]+?\.(?:jpg|jpeg|png|mp4|gif))/gi;
+
+/**
+ * Tách chuỗi phản hồi thành các phần text và media.
+ * @param {string} text - Chuỗi phản hồi thô từ bot.
+ * @returns {Array<{type: 'text' | 'image' | 'video', content: string}>}
+ */
+const processBotResponse = (text) => {
+  if (!text) return [];
+  text = text.trim();
+
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+
+  // Lặp qua tất cả các URL media tìm thấy
+  while ((match = mediaRegex.exec(text)) !== null) {
+    // 1. Lấy phần text đứng TRƯỚC URL media
+    const precedingText = text.substring(lastIndex, match.index).trim();
+    if (precedingText) {
+      // Dùng hàm split cũ để chia nhỏ text
+      parts.push(...splitChunkSmartly(precedingText, MAX_CHAR_PER_CHUNK).map(chunk => ({
+        type: 'text',
+        content: chunk
+      })));
+    }
+
+    // 2. Thêm URL media vào
+    const url = match[0];
+    const extension = url.split('.').pop().toLowerCase();
+    
+    if (extension === 'mp4') {
+      parts.push({ type: 'video', content: url });
+    } else {
+      // Mặc định là 'image' cho jpg, jpeg, png, gif
+      parts.push({ type: 'image', content: url });
+    }
+
+    lastIndex = match.index + match[0].length;
+  }
+
+  // 3. Lấy phần text còn lại (sau URL media cuối cùng)
+  const remainingText = text.substring(lastIndex).trim();
+  if (remainingText) {
+    parts.push(...splitChunkSmartly(remainingText, MAX_CHAR_PER_CHUNK).map(chunk => ({
+      type: 'text',
+      content: chunk
+    })));
+  }
+
+  return parts;
+};
 
 export const ChatProvider = ({ children }) => {
   const [state, dispatch] = useReducer(chatReducer, initialState);
@@ -140,12 +190,12 @@ export const ChatProvider = ({ children }) => {
 
       // 6. Chia tin nhắn thông minh (Giữ nguyên V8.2)
       const replyString = String(botReplyText);
-      const finalMessageChunks = splitChunkSmartly(replyString, MAX_CHAR_PER_CHUNK);
+      const finalMessageParts = processBotResponse(replyString);
       
       // =================================================================
       // 7. NÂNG CẤP V10: Vòng lặp gửi tin nhắn với DELAY ĐỘNG
       // =================================================================
-      for (const [index, chunk] of finalMessageChunks.entries()) {
+      for (const [index, part] of finalMessageParts.entries()) {
         
         // A. BẬT typing ngẫu nhiên
         const randomText = getRandomTypingText();
@@ -153,7 +203,8 @@ export const ChatProvider = ({ children }) => {
         
         // B. TÍNH TOÁN VÀ CHỜ (Delay động)
         // Tính thời gian "gõ" dựa trên độ dài chunk
-        const typingTime = (chunk.length / CHARS_PER_SECOND) * 1000;
+        const chunkLength = part.type === 'text' ? part.content.length : 100;
+        const typingTime = (chunkLength/ CHARS_PER_SECOND) * 1000;
         
         // Đảm bảo thời gian chờ nằm trong khoảng MIN và MAX
         const dynamicDelay = Math.max(MIN_TYPING_DELAY, Math.min(typingTime, MAX_TYPING_DELAY));
@@ -166,13 +217,14 @@ export const ChatProvider = ({ children }) => {
         // D. GỬI tin nhắn thật
         const botMessage = {
           id: Date.now() + index,
-          text: chunk,
+          text: part.content, // Đây là nội dung text hoặc URL
+          type: part.type,    // Đây là 'text', 'image', hoặc 'video'
           sender: 'bot',
         };
         dispatch({ type: 'ADD_MESSAGE', payload: { agentId, message: botMessage } });
 
         // E. Chờ 0.5s trước khi lặp lại (cho tự nhiên)
-        if (index < finalMessageChunks.length - 1) {
+        if (index < finalMessageParts.length - 1) {
           await delay(500); 
         }
       }

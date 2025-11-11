@@ -3,22 +3,22 @@ import { v4 as uuidv4 } from 'uuid';
 export const initialChatState  = {
   'ecommerce-bot': {
     chat_id: uuidv4(),
-    messages: [{ id: 1, text: 'Xin chào anh/chị, em là Assistant Agent. Anh/Chị có nhu cầu tư vấn sản phẩm nào tại cửa hàng không ạ?😍😍 ', sender: 'bot' }],
+    messages: [{ id: 1, text: 'Xin chào anh/chị, em là Assistant Agent. Anh/Chị có nhu cầu tư vấn sản phẩm nào tại cửa hàng không ạ?😍😍 ', sender: 'bot', type: 'text' }],
     isTyping: null
   },
   'spa-bot': {
     chat_id: uuidv4(),
-    messages: [{ id: 1, text: 'Chào mừng đến với AnVie Spa. Bạn muốn đặt lịch hay xem dịch vụ vậy ạ?😎', sender: 'bot' }],
+    messages: [{ id: 1, text: 'Chào mừng đến với AnVie Spa. Bạn muốn đặt lịch hay xem dịch vụ vậy ạ?😎', sender: 'bot', type: 'text' }],
     isTyping: null
   },
   'education-bot': {
     chat_id: uuidv4(),
-    messages: [{ id: 1, text: 'Chào anh/chị đến với Trung tâm đào tạo AICI . Anh/Chị cần tư vấn khóa học nào ạ?🤩', sender: 'bot' }],
+    messages: [{ id: 1, text: 'Chào anh/chị đến với Trung tâm đào tạo AICI . Anh/Chị cần tư vấn khóa học nào ạ?🤩', sender: 'bot', type: 'text'}],
     isTyping: null
   },
   'default': {
     chat_id: uuidv4(),
-    messages: [{id: 1, text: 'Xin chào! Tôi là trợ lý ảo chung. Tôi có thể giúp gì cho bạn?', sender: 'bot'}],
+    messages: [{id: 1, text: 'Xin chào! Tôi là trợ lý ảo chung. Tôi có thể giúp gì cho bạn?', sender: 'bot', type: 'text'}],
     isTyping: null
   }
 };

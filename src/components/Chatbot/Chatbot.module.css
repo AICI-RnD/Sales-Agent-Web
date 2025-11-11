@@ -244,3 +244,41 @@
     opacity: 0.9;
   }
 }
+
+.messageContentImage,
+.messageContentVideo {
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden; /* Quan trọng: để bo góc hình ảnh bên trong */
+  max-width: 100%;
+  line-height: 0; /* Ngăn không gian thừa bên dưới hình ảnh */
+}
+
+/* Định hình bubble cho bot (vuông góc trên bên trái) */
+.bot .messageContentImage,
+.bot .messageContentVideo {
+  border-top-left-radius: 0;
+  background-color: var(--surface-color); /* Nền cho trường hợp ảnh tải chậm */
+}
+
+/* Định hình bubble cho user (nếu user gửi ảnh) */
+.user .messageContentImage,
+.user .messageContentVideo {
+  border-top-right-radius: 0;
+  background: var(--primary-gradient);
+}
+
+/* Kiểu cho hình ảnh */
+.chatImage {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  cursor: pointer; /* Báo cho người dùng biết có thể click */
+}
+
+/* Kiểu cho video */
+.chatVideo {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

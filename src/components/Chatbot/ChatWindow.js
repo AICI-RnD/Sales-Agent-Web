@@ -58,6 +58,41 @@ const ChatWindow = () => {
 
   const isBotTyping = !!currentConversation.typingText;
 
+  const renderMessageContent = (msg) => {
+    // Mặc định là 'text' nếu tin nhắn cũ không có type
+    const type = msg.type || 'text'; 
+    
+    switch (type) {
+      case 'image':
+        return (
+          // Bọc hình ảnh trong một div để tạo bubble chat
+          <div className={styles.messageContentImage}>
+            <img 
+              src={msg.text} 
+              alt="Hình ảnh từ bot" 
+              className={styles.chatImage}
+              onClick={() => window.open(msg.text, '_blank')} // Mở ảnh tab mới khi click
+            />
+          </div>
+        );
+      case 'video':
+        return (
+          // Bọc video trong một div
+          <div className={styles.messageContentVideo}>
+            <video 
+              src={msg.text} 
+              controls 
+              className={styles.chatVideo}
+            />
+          </div>
+        );
+      case 'text':
+      default:
+        // Trả về thẻ <p> như cũ
+        return <p>{msg.text}</p>;
+    }
+  };
+
   return (
     <div className={styles.chatWindow}>
       <div className={styles.chatHeader}>
@@ -72,7 +107,7 @@ const ChatWindow = () => {
             <div className={styles.avatar}>
               {msg.sender === 'bot' ? agentIcon : <FaUser />}
             </div>
-            <p>{msg.text}</p>
+            {renderMessageContent(msg)}
           </div>
         ))}
         {isBotTyping && <TypingIndicator text={currentConversation.typingText} />}

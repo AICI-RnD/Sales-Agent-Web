@@ -1,5 +1,5 @@
 // src/components/Sections/OrdersDisplay.js
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { FaSync, FaStar, FaChevronDown  } from 'react-icons/fa';
 import axios from 'axios';
 import Papa from 'papaparse';
@@ -9,6 +9,7 @@ import sectionStyles from './Sections.module.css';
 import EcommerceOrderDetails from './OrderDetails/EcommerceOrderDetails';
 import SpaOrderDetails from './OrderDetails/SpaOrderDetails';
 import EducationOrderDetails from './OrderDetails/EducationOrderDetails';
+import OrderStatusTracker from './OrderStatusTracker';
 
 const sheetCsvUrls = {
   'ecommerce-bot': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTKa0C67Wk8-0kLdGLGdSuhoxZEpYNZ835I44_wP7VztU02FA7xzJquY549JK88u1LUXJV3sqDttnUT/pub?gid=349356717&single=true&output=csv',
@@ -67,6 +68,8 @@ const OrdersDisplay = ({ agentId }) => {
     const [error, setError] = useState(null);
     const [iframeKey, setIframeKey] = useState(Date.now());
     const [isCardExpanded, setIsCardExpanded] = useState(true);
+    const [newOrderForTracker, setNewOrderForTracker] = useState(null);
+    const prevOrderIdRef = useRef(null);
     const fetchAndParseData = useCallback(async () => {
         const csvUrl = sheetCsvUrls[agentId];
         if (!csvUrl || csvUrl.startsWith('URL_CSV')) {
@@ -85,6 +88,16 @@ const OrdersDisplay = ({ agentId }) => {
                 complete: (results) => {
                     const groupedData = groupOrderData(results.data, agentId);
                     setGroupedOrders(groupedData);
+                    const latestOrder = groupedData.length > 0 ? groupedData[0] : null;
+                    if (latestOrder) {
+                        const newOrderId = latestOrder.order_id || latestOrder.ID;
+                        
+                        // Nếu ID mới khác với ID đã lưu, kích hoạt tracker
+                        if (newOrderId && newOrderId !== prevOrderIdRef.current) {
+                            setNewOrderForTracker(latestOrder);
+                            prevOrderIdRef.current = newOrderId; // Cập nhật ID mới nhất
+                        }
+                    }
                     setError(null);
                 },
                 error: () => setError('Lỗi khi đọc dữ liệu CSV.')
@@ -142,6 +155,13 @@ const OrdersDisplay = ({ agentId }) => {
                     </div>
                     <RecentOrderComponent order={mostRecentOrder} />
                 </div>
+            )}
+            {newOrderForTracker && (
+                <OrderStatusTracker 
+                    order={newOrderForTracker} 
+                    // Tự động ẩn tracker (đặt state về null) khi animation hoàn thành
+                    onAnimationComplete={() => setNewOrderForTracker(null)} 
+                />
             )}
 
             <h4>Chi tiết đơn hàng 👇</h4>

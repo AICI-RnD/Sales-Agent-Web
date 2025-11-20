@@ -136,6 +136,11 @@
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   overflow: hidden; /* Ẩn các phần thừa của iframe */
+
+  /* === THÊM DÒNG NÀY === */
+  /* Đảm bảo container luôn có chiều cao tối thiểu 400px 
+     và không bị co lại hoàn toàn */
+  min-height: 400px; 
 }
 
 .iframe {

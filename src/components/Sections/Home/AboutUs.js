@@ -8,7 +8,7 @@ const HomeAbout = () => {
     {
       title: 'Thực Chiến',
       description: 'Ưu tiên tính ứng dụng – mọi nội dung đều bám sát công việc thật, bài toán thật.',
-      image: '/ttai.jpg',
+      image: '/amp.jpeg',
     },
     {
       title: 'Dễ Tiếp Cận',
@@ -18,7 +18,7 @@ const HomeAbout = () => {
     {
       title: 'Đồng Hành',
       description: 'Không bỏ mặc học viên – có người hướng dẫn, cộng đồng hỗ trợ, gamification giúp giữ nhịp.',
-      image: '/dh.jpg',
+      image: '/donghanh.jpeg',
     },
     {
       title: 'Kết Nối',

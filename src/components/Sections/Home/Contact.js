@@ -61,7 +61,6 @@ const Contact = () => {
             <h3>Email</h3>
             <a href="info@aiciglobal.com" className={styles.cardLink}>info@aiciglobal.com</a>
           </div>
-
           <div className={styles.infoCard}>
             <AiFillYoutube className={styles.infoIcon} />
             <h3>YouTube</h3>

@@ -1,209 +1,187 @@
 .contactSection {
   width: 100%;
-  padding: 80px 20px;
-  background: linear-gradient(135deg, #1c1b29, #2e2c40, #3c3856);
+  padding: 100px 20px;
+  /* Background nối tiếp từ Products: xám nhạt sang trắng */
+  background: linear-gradient(180deg, #eef2ff 0%, #ffffff 100%);
+}
+
+.innerWrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.titleWrapper {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #64748b;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 40px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr; /* Chia tỉ lệ 60% - 40% */
+  gap: 60px;
+  align-items: start;
 }
 
-/* Left Form */
+/* --- Left Form Style --- */
 .formContainer {
-  flex: 1 1 450px;
   background: #ffffff;
-  border-radius: 10px;
+  border-radius: 16px;
   padding: 40px;
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+  /* Shadow "nổi" kiểu Apple/Modern Web */
+  box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  border: 1px solid #f1f5f9;
 }
 
 .formTitle {
-  text-align: center;
-  font-size: 1.8rem;
-  margin-bottom: 25px;
-  color: #2f2e41;
+  font-size: 1.5rem;
+  color: #1e293b;
+  margin-bottom: 30px;
   font-weight: 700;
 }
 
 .contactForm {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 20px;
 }
 
 .inputGroup {
   position: relative;
 }
 
+/* Input kiểu Clean Corporate */
 .inputGroup input,
 .inputGroup textarea {
   width: 100%;
-  padding: 12px 16px 12px 44px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  background-color: #f8f8fc;
-}
-
-.inputGroup textarea {
-  resize: none;
-  min-height: 120px;
-  padding-left: 44px;
+  padding: 14px 16px 14px 48px; /* padding-left chừa chỗ cho icon */
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  font-size: 0.95rem;
+  color: #334155;
+  transition: all 0.2s ease;
 }
 
 .inputGroup input:focus,
 .inputGroup textarea:focus {
-  border-color: #6c63ff;
-  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
   background-color: #fff;
+  border-color: #6c63ff;
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15);
   outline: none;
 }
 
-.inputIcon {
+.inputIcon, .inputIconTop {
   position: absolute;
-  top: 50%;
-  left: 14px;
-  transform: translateY(-50%);
-  color: #999;
-  font-size: 1.2rem;
+  left: 16px;
+  color: #94a3b8;
+  font-size: 1.1rem;
+  z-index: 1;
 }
 
+.inputIcon {
+  top: 50%;
+  transform: translateY(-50%);
+}
 .inputIconTop {
-  position: absolute;
-  top: 18px;
-  left: 14px;
-  color: #999;
-  font-size: 1.2rem;
+  top: 16px;
 }
 
 .submitButton {
   background: linear-gradient(135deg, #6c63ff, #c62b94);
   color: white;
-  font-weight: 700;
+  font-weight: 600;
   border: none;
-  border-radius: 10px;
-  padding: 14px;
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 1rem;
   cursor: pointer;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 10px;
 }
 
 .submitButton:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(108, 99, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(108, 99, 255, 0.3);
 }
 
-/* Right Info */
+/* --- Right Info Style --- */
 .infoContainer {
-  flex: 1 1 450px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .infoCard {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  padding: 30px 20px;
-  text-align: center;
-  color: #fff;
+  background: #ffffff;
+  border: 1px solid #e2e8f0; /* Viền mỏng thay vì background tối */
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
   transition: all 0.3s ease;
-  backdrop-filter: blur(6px);
 }
 
 .infoCard:hover {
-  transform: translateY(-6px);
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.25);
+  border-color: #c62b94;
+  transform: translateX(5px);
+  background: #fdf2f8; /* Hover ra màu hồng rất nhạt */
 }
 
 .infoIcon {
-  font-size: 2rem;
-  margin-bottom: 12px;
+  font-size: 1.5rem;
   color: #c62b94;
+  flex-shrink: 0;
+}
+
+/* Layout lại text trong infoCard */
+.infoCard div {
+  display: flex;
+  flex-direction: column;
 }
 
 .infoCard h3 {
-  font-size: 1.1rem;
-  margin-bottom: 6px;
-  font-weight: 600;
+  font-size: 1rem;
+  color: #64748b;
+  margin: 0 0 4px 0;
+  font-weight: 500;
+  text-align: left;
 }
 
-.infoCard p {
-  font-size: 0.95rem;
-  opacity: 0.9;
-  word-break: break-word;
+.cardLink {
+  text-decoration: none;
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: color 0.2s;
+  text-align: left;
+}
+
+.cardLink:hover {
+  color: #6c63ff;
 }
 
 /* Responsive */
-@media (max-width: 992px) {
+@media (max-width: 900px) {
   .container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .infoContainer {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 576px) {
-  .infoContainer {
     grid-template-columns: 1fr;
   }
-}
-.innerWrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Giữ nguyên .titleWrapper như trước */
-.titleWrapper {
-  text-align: center;
-  margin-bottom: 60px;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 1rem;
-  background: linear-gradient(135deg, #6c63ff, #c62b94);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.subtitle {
-  font-size: 1.1rem;
-  color: #ddd;
-  line-height: 1.6;
-}
-.cardLink {
-    text-decoration: none;
-    color: #c62b94;
-    font-weight: 500;
-    position: relative;
-    transition: color 0.3s ease;
-}
-
-.cardLink::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    bottom: -4px;
-    left: 0;
-    background: var(--primary-gradient);
-    transform: scaleX(0);
-    transform-origin: bottom right;
-    transition: transform 0.3s ease-out;
+  .infoContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
 }

@@ -1,0 +1,151 @@
+/* src/components/Sections/Home/Products.module.css */
+
+.sectionContainer {
+  padding: 100px 20px;
+  background: linear-gradient(180deg, #f9fafb 0%, #f5efff 40%, #fdf2f8 100%); /* Nền sáng tinh tế */
+  text-align: center;
+}
+
+.titleWrapper {
+  margin-bottom: 60px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1a202c;
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+}
+
+.title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #6c63ff, #d946ef);
+  margin: 12px auto 0;
+  border-radius: 2px;
+}
+
+/* GRID LAYOUT 3 CỘT CHUẨN */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Bắt buộc 3 cột */
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px; /* Để shadow không bị cắt */
+}
+
+/* --- CARD STYLE GIỐNG HÌNH MẪU --- */
+.card {
+  background: #ffffff;
+  border-radius: 12px; /* Bo góc vừa phải */
+  overflow: hidden; /* Quan trọng: Cắt ảnh tràn viền theo bo góc */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06); /* Bóng mờ nhẹ */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  border: 1px solid #f0f0f0;
+  height: 100%; /* Để các card bằng nhau */
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* --- PHẦN HÌNH ẢNH TRÀN VIỀN (FULL WIDTH TOP) --- */
+.imageContainer {
+  width: 100%;
+  height: 250px; /* Chiều cao cố định */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ảnh thật */
+.productImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Đảm bảo ảnh phủ kín khung mà không bị méo */
+  transition: transform 0.5s ease;
+}
+
+.card:hover .productImage {
+  transform: scale(1.05); /* Phóng to nhẹ ảnh khi hover */
+}
+
+/* Placeholder Gradient (nếu chưa load được ảnh) */
+.imagePlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- PHẦN NỘI DUNG BÊN DƯỚI --- */
+.cardContent {
+  padding: 25px; /* Khoảng cách lề bên trong */
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.cardTitle {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.cardDescription {
+  font-size: 0.95rem;
+  color: #718096;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  flex-grow: 1; /* Đẩy nút xuống đáy card */
+}
+
+/* --- NÚT BẤM --- */
+.learnMoreBtn {
+  align-self: flex-start;
+  padding: 10px 24px;
+  background-color: transparent;
+  color: #6c63ff;
+  border: 1px solid #6c63ff;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.learnMoreBtn:hover {
+  background-color: #6c63ff;
+  color: #ffffff;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .cardsGrid {
+    grid-template-columns: repeat(2, 1fr); /* Tablet: 2 cột */
+  }
+}
+
+@media (max-width: 640px) {
+  .cardsGrid {
+    grid-template-columns: 1fr; /* Mobile: 1 cột */
+  }
+  .sectionContainer { padding: 60px 15px; }
+}

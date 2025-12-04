@@ -282,3 +282,48 @@
   max-width: 100%;
   height: auto;
 }
+
+
+.typingContainer {
+  background-color: var(--surface-color); /* Màu nền trắng/xám nhạt giống tin nhắn bot */
+  padding: 12px 16px;
+  border-radius: var(--border-radius);
+  border-top-left-radius: 0; /* Bo góc đặc trưng của bot */
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 10px;
+  animation: slideInUp 0.3s ease-out;
+  border: 1px solid var(--border-color); /* Thêm viền nhẹ cho rõ */
+}
+
+/* Dấu chấm tròn */
+.typingDot {
+  width: 8px;
+  height: 8px;
+  background: var(--grad-1); /* Dùng màu tím chủ đạo của app */
+  border-radius: 50%;
+  animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+/* Chỉnh độ trễ để tạo hiệu ứng làn sóng */
+.typingDot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+.typingDot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+/* Keyframes cho chuyển động nhảy */
+@keyframes typingBounce {
+  0%, 80%, 100% { 
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}

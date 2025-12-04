@@ -110,7 +110,14 @@ const ChatWindow = () => {
             {renderMessageContent(msg)}
           </div>
         ))}
-        {isBotTyping && <TypingIndicator text={currentConversation.typingText} />}
+        {isBotTyping && (
+          <div className={`${styles.message} ${styles.bot}`}>
+            <div className={styles.avatar}>
+              {agentIcon} {/* Dùng icon của agent hiện tại */}
+            </div>
+            <TypingIndicator />
+          </div>
+        )}
         <div ref={messagesEndRef} />
       </div>
       <form className={styles.chatInputForm} onSubmit={handleSendMessage}>

@@ -189,9 +189,6 @@ export const ChatProvider = ({ children }) => {
       // =================================================================
       for (const [index, part] of finalMessageParts.entries()) {
         
-        // A. BẬT typing ngẫu nhiên
-        const randomText = getRandomTypingText();
-        dispatch({ type: 'SET_TYPING_TEXT', payload: { agentId, text: randomText } });
         
         // B. TÍNH TOÁN VÀ CHỜ (Delay động)
         // Tính thời gian "gõ" dựa trên độ dài chunk

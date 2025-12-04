@@ -6,16 +6,8 @@ const ChatContext = createContext();
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-const TYPING_MESSAGES = [
-  "Đợi mình tí, mình mới vô nghề, gõ tin nhắn hơi chậm xí...😎",
-  "Hmm, để ní xem nào... 🤔",
-  "Dạ em đang tìm thông tin ạ...",
-  "Xin chờ một lát nhé! 🤓",
-  "Để em kiểm tra nhaaaaa...",
-  "Đợi mình hỏi sếp phát nha...😅",
-];
+const TYPING_INDICATOR = "...";
 
-const getRandomTypingText = () => TYPING_MESSAGES[Math.floor(Math.random() * TYPING_MESSAGES.length)];
 
 // =================================================================
 // HẰNG SỐ CẤU HÌNH (V10)
@@ -170,7 +162,7 @@ export const ChatProvider = ({ children }) => {
     dispatch({ type: 'ADD_MESSAGE', payload: { agentId, message: userMessage } });
     
     // 2. Bật typing "chuẩn" trong khi chờ API
-    dispatch({ type: 'SET_TYPING_TEXT', payload: { agentId, text: "Anh/Chị pha miếng trà, ăn miếng bánh. Đợi em xí nhé🤓" } });
+    dispatch({ type: 'SET_TYPING_TEXT', payload: { agentId, text: TYPING_INDICATOR } });
     const botReplyText = await getBotResponse(agentId, chatId, userMessage.text);
 
     // 3. Tắt typing "chuẩn"

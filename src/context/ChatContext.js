@@ -188,7 +188,7 @@ export const ChatProvider = ({ children }) => {
       // 7. NÂNG CẤP V10: Vòng lặp gửi tin nhắn với DELAY ĐỘNG
       // =================================================================
       for (const [index, part] of finalMessageParts.entries()) {
-        
+        dispatch({ type: 'SET_TYPING_TEXT', payload: { agentId, text: TYPING_INDICATOR } });
         
         // B. TÍNH TOÁN VÀ CHỜ (Delay động)
         // Tính thời gian "gõ" dựa trên độ dài chunk
